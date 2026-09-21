@@ -1,0 +1,116 @@
+@import "tailwindcss";
+
+@theme {
+  /* Core: warm paper + ink (gallery-register identity) */
+  --color-background: #f4f2eb;
+  --color-foreground: #1c1815;
+  --color-card: #fbfaf6;
+  --color-card-foreground: #1c1815;
+  --color-popover: #fbfaf6;
+  --color-popover-foreground: #1c1815;
+  --color-muted: #ebe8df;
+  --color-muted-foreground: #6c665c;
+  --color-border: #dad5c9;
+  --color-input: #cfc9bb;
+  --color-ring: #d8382a;
+
+  /* Primary is ink; the stamp red is the single signature accent */
+  --color-primary: #1c1815;
+  --color-primary-foreground: #f7f5ef;
+  --color-secondary: #ebe8df;
+  --color-secondary-foreground: #1c1815;
+  --color-accent: #ece7db;
+  --color-accent-foreground: #1c1815;
+
+  /* Signature accent: cadmium / wax-stamp red (focal action + live status only) */
+  --color-stamp: #d8382a;
+  --color-stamp-foreground: #f7f5ef;
+
+  /* Status */
+  --color-destructive: #a83240;
+  --color-destructive-foreground: #f7f5ef;
+  --color-success: #3f7a5e;
+  --color-success-foreground: #f7f5ef;
+  --color-warning: #b98a1e;
+  --color-warning-foreground: #1c1815;
+
+  /* Artist pigment set: data encoding only (grades, categories, chart series) */
+  --color-pigment-alizarin: #a83240;
+  --color-pigment-cadmium: #c56a1e;
+  --color-pigment-ochre: #b98a1e;
+  --color-pigment-viridian: #3f7a5e;
+  --color-pigment-cerulean: #2c7c90;
+  --color-pigment-ultramarine: #33509e;
+  --color-pigment-violet: #6b4e8e;
+
+  --font-sans: var(--font-hanken), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-bricolage), Georgia, serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
+
+  --radius-sm: 3px;
+  --radius-md: 4px;
+  --radius-lg: 6px;
+  --radius-xl: 8px;
+  --radius-2xl: 10px;
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    font-feature-settings: "cv05" 1;
+  }
+  ::selection {
+    background-color: var(--color-stamp);
+    color: var(--color-stamp-foreground);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-stamp);
+    outline-offset: 2px;
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: var(--font-display);
+  }
+  .font-mono {
+    font-family: var(--font-mono);
+  }
+  /* Registry voice: small mono label used for eyebrows, catalog numbers, meta */
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-muted-foreground);
+  }
+  /* Identity motif: a small row of pigment swatches (the chapter's palette) */
+  .swatch-row {
+    display: inline-flex;
+    height: 0.5rem;
+  }
+  .swatch-row > span {
+    width: 0.5rem;
+    height: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
