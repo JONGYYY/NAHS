@@ -85,15 +85,24 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ### 6. Make yourself an admin
 Sign in once with Google and complete onboarding. Then, in the Supabase **SQL Editor**, promote your
-account:
+account.
+
+A guard trigger (`trg_protect_profile`) blocks non-admins from changing `role`/`status`, and the SQL
+editor runs without a logged-in user, so it counts as a non-admin. For the **first** admin, disable
+that trigger for the update, then re-enable it:
 
 ```sql
+alter table public.profiles disable trigger trg_protect_profile;
+
 update public.profiles
 set role = 'admin', status = 'active'
 where email = 'you@yourschool.org';
+
+alter table public.profiles enable trigger trg_protect_profile;
 ```
 
-Refresh the app — you'll now have the **Admin console**.
+Refresh the app — you'll now have the **Admin console**. From there you can promote other members
+without touching SQL again.
 
 ---
 
