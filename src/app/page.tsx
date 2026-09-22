@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getProfile } from "@/lib/auth";
 import { GoogleSignInButton } from "@/components/auth/google-sign-in-button";
@@ -90,9 +91,19 @@ export default async function LandingPage() {
       <footer className="mx-auto max-w-6xl px-5 py-10">
         <div className="flex flex-col items-start justify-between gap-4 border-t border-border pt-6 sm:flex-row sm:items-center">
           <Wordmark subtitle="Chapter register" />
-          <p className="text-sm text-muted-foreground">
-            Kept by our chapter for art, character, and service.
-          </p>
+          <div className="flex flex-col gap-3 sm:items-end">
+            <nav className="flex gap-5 text-sm text-muted-foreground">
+              <Link href="/privacy" className="hover:text-foreground">
+                Privacy
+              </Link>
+              <Link href="/terms" className="hover:text-foreground">
+                Terms
+              </Link>
+            </nav>
+            <p className="text-sm text-muted-foreground">
+              Kept by our chapter for art, character, and service.
+            </p>
+          </div>
         </div>
       </footer>
     </main>
