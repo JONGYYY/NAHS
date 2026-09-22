@@ -17,7 +17,13 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+
+// Local-time YYYY-MM-DD, so the date defaults to the admin's current day.
+function todayISO() {
+  const d = new Date();
+  const local = new Date(d.getTime() - d.getTimezoneOffset() * 60000);
+  return local.toISOString().slice(0, 10);
+}
 
 export function MeetingFormDialog({ meeting }: { meeting?: Meeting }) {
   const [open, setOpen] = useState(false);
@@ -64,60 +70,23 @@ export function MeetingFormDialog({ meeting }: { meeting?: Meeting }) {
             <Input
               id="title"
               name="title"
-              defaultValue={meeting?.title}
-              placeholder="Weekly meeting"
+              defaultValue={meeting?.title ?? "Weekly Meeting"}
+              placeholder="Weekly Meeting"
               required
             />
           </div>
-          <div className="grid grid-cols-2 gap-3">
-            <div className="space-y-2">
-              <Label htmlFor="meeting_date">Date</Label>
-              <Input
-                id="meeting_date"
-                name="meeting_date"
-                type="date"
-                defaultValue={meeting?.meeting_date}
-                required
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="location">Location</Label>
-              <Input
-                id="location"
-                name="location"
-                defaultValue={meeting?.location ?? ""}
-                placeholder="Art room 214"
-              />
-            </div>
-          </div>
-          <div className="grid grid-cols-2 gap-3">
-            <div className="space-y-2">
-              <Label htmlFor="start_time">Start time</Label>
-              <Input
-                id="start_time"
-                name="start_time"
-                type="time"
-                defaultValue={meeting?.start_time ?? ""}
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="end_time">End time</Label>
-              <Input
-                id="end_time"
-                name="end_time"
-                type="time"
-                defaultValue={meeting?.end_time ?? ""}
-              />
-            </div>
-          </div>
           <div className="space-y-2">
-            <Label htmlFor="description">Description</Label>
-            <Textarea
-              id="description"
-              name="description"
-              defaultValue={meeting?.description ?? ""}
-              placeholder="What's happening at this meeting?"
+            <Label htmlFor="meeting_date">Date</Label>
+            <Input
+              id="meeting_date"
+              name="meeting_date"
+              type="date"
+              defaultValue={meeting?.meeting_date ?? todayISO()}
+              required
             />
+            <p className="text-xs text-muted-foreground">
+              Defaults to today. Meetings run weekly on Tuesdays &mdash; change the date if needed.
+            </p>
           </div>
           <DialogFooter>
             <Button type="button" variant="outline" onClick={() => setOpen(false)}>
