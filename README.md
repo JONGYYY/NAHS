@@ -70,7 +70,7 @@ cp .env.local.example .env.local
 
 ```
 NEXT_PUBLIC_SUPABASE_URL=https://YOUR-PROJECT.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=YOUR-ANON-KEY
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=YOUR-PUBLISHABLE-KEY
 NEXT_PUBLIC_SITE_URL=http://localhost:3000
 ```
 
@@ -100,7 +100,7 @@ Refresh the app — you'll now have the **Admin console**.
 ## Deploying to Vercel
 1. Push this repo to GitHub.
 2. Import it in [Vercel](https://vercel.com).
-3. Add the same environment variables (`NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`,
+3. Add the same environment variables (`NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`,
    and `NEXT_PUBLIC_SITE_URL` set to your production URL).
 4. In Supabase **Authentication → URL Configuration**, add your Vercel domain to the allowed redirect
    URLs.
