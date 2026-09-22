@@ -68,28 +68,16 @@ export function ActivityFormDialog({ activity }: { activity?: Activity }) {
               required
             />
           </div>
-          <div className="grid grid-cols-2 gap-3">
-            <div className="space-y-2">
-              <Label htmlFor="activity_date">Date</Label>
-              <Input
-                id="activity_date"
-                name="activity_date"
-                type="date"
-                defaultValue={activity?.activity_date}
-                required
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="ssl_hours_default">Default SSL hours</Label>
-              <Input
-                id="ssl_hours_default"
-                name="ssl_hours_default"
-                type="number"
-                step="0.5"
-                min="0"
-                defaultValue={activity?.ssl_hours_default ?? 1}
-              />
-            </div>
+          <div className="space-y-2">
+            <Label htmlFor="ssl_hours_default">Default SSL hours</Label>
+            <Input
+              id="ssl_hours_default"
+              name="ssl_hours_default"
+              type="number"
+              step="0.5"
+              min="0"
+              defaultValue={activity?.ssl_hours_default ?? 1}
+            />
           </div>
           <div className="space-y-2">
             <Label htmlFor="category">Category</Label>

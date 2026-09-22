@@ -224,8 +224,9 @@ export async function createActivity(formData: FormData): Promise<ActionResult<{
   const { supabase, isAdmin, user } = await assertAdmin();
   if (!isAdmin) return { ok: false, error: "Not authorized" };
   const name = String(formData.get("name") ?? "").trim();
-  const activity_date = String(formData.get("activity_date") ?? "");
-  if (!name || !activity_date) return { ok: false, error: "Name and date are required" };
+  if (!name) return { ok: false, error: "Name is required" };
+  const activity_date =
+    String(formData.get("activity_date") ?? "") || new Date().toISOString().slice(0, 10);
 
   const { data, error } = await supabase
     .from("activities")
@@ -249,16 +250,17 @@ export async function updateActivity(formData: FormData): Promise<ActionResult> 
   const { supabase, isAdmin } = await assertAdmin();
   if (!isAdmin) return { ok: false, error: "Not authorized" };
   const id = String(formData.get("id"));
-  const { error } = await supabase
-    .from("activities")
-    .update({
-      name: String(formData.get("name") ?? "").trim(),
-      activity_date: String(formData.get("activity_date") ?? ""),
-      category: (formData.get("category") as string) || null,
-      description: (formData.get("description") as string) || null,
-      ssl_hours_default: Number(formData.get("ssl_hours_default") ?? 0),
-    })
-    .eq("id", id);
+  const patch: Record<string, unknown> = {
+    name: String(formData.get("name") ?? "").trim(),
+    category: (formData.get("category") as string) || null,
+    description: (formData.get("description") as string) || null,
+    ssl_hours_default: Number(formData.get("ssl_hours_default") ?? 0),
+  };
+  // Preserve the existing date when the form no longer sends one.
+  const activity_date = formData.get("activity_date");
+  if (activity_date) patch.activity_date = String(activity_date);
+
+  const { error } = await supabase.from("activities").update(patch).eq("id", id);
   if (error) return { ok: false, error: error.message };
   revalidatePath(`/admin/activities/${id}`);
   revalidatePath("/admin/activities");
