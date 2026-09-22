@@ -1,8 +1,10 @@
 import Link from "next/link";
+import { Shield } from "lucide-react";
 import { requireMember } from "@/lib/auth";
 import { Wordmark } from "@/components/brand/logo";
 import { MemberBottomNav, MemberSideNav } from "@/components/layout/member-nav";
 import { UserMenu } from "@/components/layout/user-menu";
+import { Button } from "@/components/ui/button";
 
 export default async function MemberLayout({ children }: { children: React.ReactNode }) {
   const profile = await requireMember();
@@ -15,13 +17,23 @@ export default async function MemberLayout({ children }: { children: React.React
             <Wordmark subtitle="Chapter register" />
           </Link>
           <MemberSideNav />
-          <UserMenu
-            name={profile.full_name}
-            email={profile.email}
-            avatarUrl={profile.avatar_url}
-            isAdmin={profile.role === "admin"}
-            context="member"
-          />
+          <div className="flex items-center gap-2">
+            {profile.role === "admin" ? (
+              <Button asChild variant="outline" size="sm">
+                <Link href="/admin">
+                  <Shield />
+                  <span className="hidden sm:inline">Admin view</span>
+                </Link>
+              </Button>
+            ) : null}
+            <UserMenu
+              name={profile.full_name}
+              email={profile.email}
+              avatarUrl={profile.avatar_url}
+              isAdmin={profile.role === "admin"}
+              context="member"
+            />
+          </div>
         </div>
       </header>
 
